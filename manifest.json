@@ -9,14 +9,21 @@
   },
   "icon": "icon.svg",
   "widgets": [
-
     {
-      "key": "replaceyt-cfg",
-      "name": "Configure Youtrack Text Replace",
-      "indexPath": "replaceyt-cfg/index.html",
-      "extensionPoint": "PROJECT_SETTINGS",
-      "iconPath": "replaceyt-cfg/widget-icon.svg",
-      "description": "Configure Youtrack Text Replace"
+      "key": "replaceyt-global-cfg",
+      "name": "Replacements Config",
+      "indexPath": "replaceyt-global-cfg/index.html",
+      "extensionPoint": "ADMINISTRATION_MENU_ITEM",
+      "iconPath": "replaceyt-global-cfg/widget-icon.svg",
+      "description": "Configure text replacements for tickets and articles."
     }
-  ]
+  ],
+  "modules": {
+    "workflows": [
+      {
+        "name": "Replace Text Workflow",
+        "script": "replace-text-wf.js"
+      }
+    ]
+  }
 }

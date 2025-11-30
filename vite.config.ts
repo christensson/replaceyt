@@ -32,6 +32,11 @@ export default defineConfig({
         {
           src: 'widgets/**/*.{svg,png,jpg,json}',
           dest: '.'
+        },
+        // Workflows (raw JS files copied verbatim)
+        {
+          src: 'replace-text-wf.js',
+          dest: '.'
         }
       ],
       structured: true
@@ -49,8 +54,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         // List every widget entry point here
-        replaceytCfg: resolve(__dirname, 'src/widgets/replaceyt-cfg/index.html'),
-
+        replaceytGlobalCfg: resolve(__dirname, 'src/widgets/replaceyt-global-cfg/index.html'),
       }
     }
   }

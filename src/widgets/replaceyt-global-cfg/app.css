@@ -1,0 +1,25 @@
+.widget {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--ring-unit) * 2);
+  margin: calc(var(--ring-unit) / 2);
+}
+
+.header-row {
+  border-bottom: 1px solid var(--ring-line-color);
+  padding: 8px 0;
+  font-weight: 500;
+}
+
+.data-row {
+  border-bottom: 1px solid var(--ring-line-color);
+  padding: var(--ring-unit) 0;
+}
+
+.add-row {
+  padding-top: var(--ring-unit);
+}
+
+.delete-col {
+  text-align: center;
+}

@@ -1,0 +1,13 @@
+{
+  "entityTypeExtensions": [
+    {
+      "entityType": "AppGlobalStorage",
+      "properties": {
+        "replacements": {
+          "type": "string",
+          "multi": false
+        }
+      }
+    }
+  ]
+}
