@@ -5,6 +5,7 @@ export type Replacement = {
   patternIsRegex: boolean;
   ignoreCodeBlocks: boolean;
   ignoreLinks: boolean;
+  ignoreInlineCode: boolean;
 };
 
 export type Replacements = Replacement[];
@@ -12,13 +13,14 @@ export type Replacements = Replacement[];
 type ProtectedRange = {
   start: number;
   end: number;
-  type: "codeBlock" | "link";
+  type: "codeBlock" | "link" | "inlineCode";
 };
 
 const findProtectedRanges = (
   text: string,
   ignoreCodeBlocks: boolean,
-  ignoreLinks: boolean
+  ignoreLinks: boolean,
+  ignoreInlineCode: boolean
 ): ProtectedRange[] => {
   const ranges: ProtectedRange[] = [];
 
@@ -62,6 +64,23 @@ const findProtectedRanges = (
         start: urlStart,
         end: urlEnd,
         type: "link",
+      });
+    }
+  }
+
+  if (ignoreInlineCode) {
+    // Find all inline code `text`
+    const inlineCodeRegex = /`([^`]+)`/g;
+    let match;
+    while ((match = inlineCodeRegex.exec(text)) !== null) {
+      const codeText = match[1];
+      const codeStart = match.index + 1; // after first '`'
+      const codeEnd = codeStart + codeText.length;
+
+      ranges.push({
+        start: codeStart,
+        end: codeEnd,
+        type: "inlineCode",
       });
     }
   }
@@ -149,7 +168,8 @@ export const replaceText = (text: string, replacements: Replacements): string =>
     const protectedRanges = findProtectedRanges(
       outputText,
       item.ignoreCodeBlocks,
-      item.ignoreLinks
+      item.ignoreLinks,
+      item.ignoreInlineCode
     );
 
     // Apply replacement with protection

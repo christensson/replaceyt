@@ -28,6 +28,7 @@ const defaultReplacement: Replacement = {
   patternIsRegex: false,
   ignoreCodeBlocks: true,
   ignoreLinks: true,
+  ignoreInlineCode: false,
 };
 
 // Register widget in YouTrack. To learn more, see https://www.jetbrains.com/help/youtrack/devportal-apps/apps-host-api.html
@@ -101,6 +102,10 @@ const AppComponent: React.FunctionComponent = () => {
     updateReplacementField(index, "ignoreLinks", value);
   }, []);
 
+  const handleIgnoreInlineCodeChange = useCallback((index: number, value: boolean) => {
+    updateReplacementField(index, "ignoreInlineCode", value);
+  }, []);
+
   const handleAddRow = useCallback(() => {
     setReplacements((prev) => [
       ...prev,
@@ -169,15 +174,22 @@ const AppComponent: React.FunctionComponent = () => {
                       <div className="config-input">
                         <Checkbox
                           label="Ignore code blocks"
-                          checked={item.ignoreCodeBlocks as boolean}
+                          checked={item.ignoreCodeBlocks}
                           onChange={(e) => handleIgnoreCodeBlocksChange(index, e.target.checked)}
                         />
                       </div>
                       <div className="config-input">
                         <Checkbox
                           label="Ignore links"
-                          checked={item.ignoreLinks as boolean}
+                          checked={item.ignoreLinks}
                           onChange={(e) => handleIgnoreLinksChange(index, e.target.checked)}
+                        />
+                      </div>
+                      <div className="config-input">
+                        <Checkbox
+                          label="Ignore inline code"
+                          checked={item.ignoreInlineCode}
+                          onChange={(e) => handleIgnoreInlineCodeChange(index, e.target.checked)}
                         />
                       </div>
                     </CollapseContent>
