@@ -139,7 +139,7 @@ const AppComponent: React.FunctionComponent = () => {
                   <div className="config-pattern-regex-group">
                     <Input
                       label={`${item.patternIsRegex ? "Regex" : "String"} to search and replace`}
-                      value={item.pattern as string}
+                      value={item.pattern}
                       onChange={(e) => handlePatternChange(index, e.target.value)}
                       placeholder="Enter pattern"
                       size={Size.L}
@@ -155,12 +155,14 @@ const AppComponent: React.FunctionComponent = () => {
                   </div>
                   <Input
                     label="Replacement"
-                    value={item.replacement as string}
+                    value={item.replacement}
                     onChange={(e) => handleReplacementChange(index, e.target.value)}
-                    placeholder="Replacement text. If a regex is used, capture groups are available using $1, $2, etc."
                     size={Size.L}
                     multiline
                     className="config-input"
+                    help={
+                      item.patternIsRegex ? "Capture groups are available using $1, $2, etc." : null
+                    }
                   />
                   <Collapse>
                     <CollapseControl>
