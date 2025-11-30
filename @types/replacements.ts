@@ -1,7 +1,10 @@
 export type Replacement = {
-  pattern: String;
+  id: string;
+  pattern: string;
+  replacement: string;
   patternIsRegex: boolean;
-  replacement: String;
+  ignoreCodeBlocks: boolean;
+  ignoreLinks: boolean;
 };
 
 export type Replacements = Replacement[];

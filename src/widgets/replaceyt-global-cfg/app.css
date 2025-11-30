@@ -5,10 +5,21 @@
   margin: calc(var(--ring-unit) / 2);
 }
 
-.header-row {
-  border-bottom: 1px solid var(--ring-line-color);
-  padding: 8px 0;
-  font-weight: 500;
+.config-and-test-panel {
+  display: flex;
+  flex-direction: row;
+  gap: calc(var(--ring-unit) * 2);
+}
+
+.config-replacements-panel {
+  display: flex;
+}
+
+.config-test-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--ring-unit);
 }
 
 .data-row {
@@ -18,6 +29,21 @@
 
 .add-row {
   padding-top: var(--ring-unit);
+}
+
+.config-input {
+  padding-top: var(--ring-unit)
+}
+
+.config-pattern-regex-group {
+  display: flex;
+  align-items: end;
+  gap: calc(var(--ring-unit) / 2);
+}
+
+.config-regex-toggle {
+  padding-left: 6px !important;
+  padding-right: 6px !important;
 }
 
 .delete-col {
