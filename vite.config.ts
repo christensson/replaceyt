@@ -37,6 +37,10 @@ export default defineConfig({
         {
           src: 'replace-text-wf.js',
           dest: '.'
+        },
+        {
+          src: 'replace-text.js',
+          dest: '.'
         }
       ],
       structured: true
