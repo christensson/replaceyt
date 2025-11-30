@@ -11,7 +11,7 @@ exports.rule = entities.Issue.onChange({
     const replacementsJson = ctx.globalStorage.extensionProperties.replacements;
     const replacements = replacementsJson ? JSON.parse(replacementsJson) : [];
     console.log("Replacements", replacements);
-    ctx.issue.description = utils.replaceText(ctx.issue.description, replacements);
+    ctx.issue.description = utils.replaceText(ctx.issue.description, replacements, true);
   },
   requirements: {}
 });

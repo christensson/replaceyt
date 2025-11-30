@@ -29,6 +29,7 @@ const defaultReplacement: Replacement = {
   ignoreCodeBlocks: true,
   ignoreLinks: true,
   ignoreInlineCode: false,
+  enabled: true,
 };
 
 // Register widget in YouTrack. To learn more, see https://www.jetbrains.com/help/youtrack/devportal-apps/apps-host-api.html
@@ -106,6 +107,10 @@ const AppComponent: React.FunctionComponent = () => {
     updateReplacementField(index, "ignoreInlineCode", value);
   }, []);
 
+  const handleEnabledChange = useCallback((index: number, value: boolean) => {
+    updateReplacementField(index, "enabled", value);
+  }, []);
+
   const handleAddRow = useCallback(() => {
     setReplacements((prev) => [
       ...prev,
@@ -122,7 +127,7 @@ const AppComponent: React.FunctionComponent = () => {
 
   const testReplacements = useCallback(
     (inputText: string) => {
-      const outputText = replaceText(inputText, replacements);
+      const outputText = replaceText(inputText, replacements, false);
       setTestTextOutput(outputText);
     },
     [replacements]
@@ -173,6 +178,14 @@ const AppComponent: React.FunctionComponent = () => {
                       )}
                     </CollapseControl>
                     <CollapseContent>
+                      <div className="config-input">
+                        <Checkbox
+                          label="Enabled"
+                          checked={item.enabled}
+                          onChange={(e) => handleEnabledChange(index, e.target.checked)}
+                          help="Enabling the replacement activates replacement at issue updates."
+                        />
+                      </div>
                       <div className="config-input">
                         <Checkbox
                           label="Ignore code blocks"

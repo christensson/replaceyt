@@ -6,6 +6,7 @@ export type Replacement = {
   ignoreCodeBlocks: boolean;
   ignoreLinks: boolean;
   ignoreInlineCode: boolean;
+  enabled: boolean;
 };
 
 export type Replacements = Replacement[];
@@ -158,12 +159,20 @@ const applyReplacementWithProtection = (
   return result;
 };
 
-export const replaceText = (text: string, replacements: Replacements): string => {
+export const replaceText = (
+  text: string,
+  replacements: Replacements,
+  enabledOnly: boolean
+): string => {
   if (!text) return text;
 
   let outputText = text;
 
   for (const item of replacements) {
+    // Skip disabled items if enabled only.
+    if (enabledOnly && !item.enabled) {
+      continue;
+    }
     // Find protected ranges for this replacement
     const protectedRanges = findProtectedRanges(
       outputText,
