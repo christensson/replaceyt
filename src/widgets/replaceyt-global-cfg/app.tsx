@@ -39,32 +39,36 @@ const AppComponent: React.FunctionComponent = () => {
   const [testTextOutput, setTestTextOutput] = useState<string>("");
 
   useEffect(() => {
-    host.fetchApp<{ replacements: Replacements }>("backend/globalConfig", {}).then((result) => {
-      const replacements = result.replacements;
-      // eslint-disable-next-line no-console
-      console.log("Replacements:", replacements);
-      if (replacements != null && Array.isArray(replacements)) {
-        for (const item of replacements) {
-          for (const [key, value] of Object.entries(defaultReplacement)) {
-            if (item.hasOwnProperty(key) === false) {
-              // @ts-ignore
-              item[key] = value;
+    host
+      .fetchApp<{ replacements: Replacements; testInput: string }>("backend/globalConfig", {})
+      .then((result) => {
+        const replacements = result.replacements;
+        const testInput = result.testInput;
+        // eslint-disable-next-line no-console
+        console.log("Got replacements:", replacements);
+        if (replacements != null && Array.isArray(replacements)) {
+          for (const item of replacements) {
+            for (const [key, value] of Object.entries(defaultReplacement)) {
+              if (item.hasOwnProperty(key) === false) {
+                // @ts-ignore
+                item[key] = value;
+              }
+            }
+            if (item.id == null || item.id === "") {
+              item.id = crypto.randomUUID();
             }
           }
-          if (item.id == null || item.id === "") {
-            item.id = crypto.randomUUID();
-          }
+          setReplacements(replacements);
+          setTestTextInput(testInput);
         }
-        setReplacements(replacements);
-      }
-    });
+      });
   }, [host]);
 
   const storeReplacements = async (replacements: Replacements) => {
     console.log("Storing replacements:", replacements);
     const res = await host.fetchApp("backend/globalConfig", {
       method: "POST",
-      body: { replacements: replacements },
+      body: { replacements: replacements, testInput: testTextInput },
     });
     console.log("Store response:", res);
   };
@@ -203,7 +207,11 @@ const AppComponent: React.FunctionComponent = () => {
           </Text>
           <Input
             label="Input text"
-            onChange={(e) => setTestTextInput(e.target.value)}
+            onChange={(e) => {
+              console.log("input changed");
+              setTestTextInput(e.target.value);
+            }}
+            defaultValue={testTextInput}
             size={Size.L}
             multiline
           />

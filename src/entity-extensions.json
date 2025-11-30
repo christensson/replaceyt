@@ -6,6 +6,10 @@
         "replacements": {
           "type": "string",
           "multi": false
+        },
+        "testInput": {
+          "type": "string",
+          "multi": false
         }
       }
     }
