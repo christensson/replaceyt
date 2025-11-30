@@ -1,4 +1,15 @@
-exports.replaceText = (text, replacements) => {
+export type Replacement = {
+  id: string;
+  pattern: string;
+  replacement: string;
+  patternIsRegex: boolean;
+  ignoreCodeBlocks: boolean;
+  ignoreLinks: boolean;
+};
+
+export type Replacements = Replacement[];
+
+export const replaceText = (text: string, replacements: Replacements): string => {
   if (!text) return text;
   let outputText = text;
   for (const item of replacements) {
@@ -10,4 +21,4 @@ exports.replaceText = (text, replacements) => {
     }
   }
   return outputText;
-}
+};

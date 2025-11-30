@@ -10,13 +10,14 @@ import Panel from "@jetbrains/ring-ui-built/components/panel/panel";
 import { Grid, Row, Col } from "@jetbrains/ring-ui-built/components/grid/grid";
 import Code from "@jetbrains/ring-ui-built/components/code/code";
 import { highlight } from "@jetbrains/ring-ui-built/components/code/code";
-import type { Replacements, Replacement } from "../../../@types/replacements";
 import Checkbox from "@jetbrains/ring-ui-built/components/checkbox/checkbox";
 import Collapse from "@jetbrains/ring-ui-built/components/collapse/collapse";
 import CollapseControl from "@jetbrains/ring-ui-built/components/collapse/collapse-control";
 import CollapseContent from "@jetbrains/ring-ui-built/components/collapse/collapse-content";
 // @ts-ignore
 import langMarkdown from "highlight.js/lib/languages/markdown.js";
+import { replaceText } from "../../replace-text";
+import type { Replacements, Replacement } from "../../replace-text";
 
 highlight.registerLanguage("markdown", langMarkdown);
 
@@ -112,15 +113,7 @@ const AppComponent: React.FunctionComponent = () => {
 
   const testReplacements = useCallback(
     (inputText: string) => {
-      let outputText = inputText;
-      for (const item of replacements) {
-        if (item.patternIsRegex) {
-          const pattern = new RegExp(item.pattern, "g");
-          outputText = outputText.replace(pattern, item.replacement);
-        } else {
-          outputText = outputText.replace(item.pattern, item.replacement);
-        }
-      }
+      const outputText = replaceText(inputText, replacements);
       setTestTextOutput(outputText);
     },
     [replacements]

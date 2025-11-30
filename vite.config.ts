@@ -17,11 +17,20 @@ export default defineConfig({
           dest: '.'
         },
         {
-          src: '*.*',
+          src: '*.js',
+          dest: '.'
+        },
+        {
+          src: '*.json',
           dest: '.'
         },
         {
           src: '../public/*.*',
+          dest: '.'
+        },
+        // Transpiled ts files from cjs build.
+        {
+          src: '../dist-js/*.js',
           dest: '.'
         }
       ]
@@ -33,15 +42,6 @@ export default defineConfig({
           src: 'widgets/**/*.{svg,png,jpg,json}',
           dest: '.'
         },
-        // Workflows (raw JS files copied verbatim)
-        {
-          src: 'replace-text-wf.js',
-          dest: '.'
-        },
-        {
-          src: 'replace-text.js',
-          dest: '.'
-        }
       ],
       structured: true
     })

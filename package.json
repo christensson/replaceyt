@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -p tsconfig.app.json && vite build && youtrack-app validate dist",
+    "build": "tsc -p tsconfig.app.json && tsc -p tsconfig.cjs.json && vite build && youtrack-app validate dist",
+    "build-ts": "tsc -p tsconfig.app.json && tsc -p tsconfig.cjs.json",
     "lint": "eslint --report-unused-disable-directives --max-warnings 0",
     "test": "echo 'no tests'",
     "pack": "rm -rf replaceyt.zip && cd dist/ && bestzip ../replaceyt.zip *",
