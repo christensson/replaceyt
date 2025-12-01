@@ -1,20 +1,20 @@
 {
   "name": "replaceyt",
-  "title": "Youtrack Text Replace",
+  "title": "Text Replacer",
   "description": "Replace text in youtrack tickets and articles.",
   "$schema": "https://json.schemastore.org/youtrack-app.json",
   "vendor": {
     "name": "Marcus Christensson",
     "url": "https://github.com/christensson/replaceyt"
   },
-  "icon": "icon.svg",
+  "icon": "replaceyt-icon.svg",
   "widgets": [
     {
       "key": "replaceyt-global-cfg",
-      "name": "Replacements Config",
+      "name": "Text Replacer Config",
       "indexPath": "replaceyt-global-cfg/index.html",
       "extensionPoint": "ADMINISTRATION_MENU_ITEM",
-      "iconPath": "replaceyt-global-cfg/widget-icon.svg",
+      "iconPath": "replaceyt-global-cfg/replaceyt-icon.svg",
       "description": "Configure text replacements for tickets and articles."
     }
   ],
