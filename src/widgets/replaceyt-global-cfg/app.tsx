@@ -5,6 +5,7 @@ import TrashIcon from "@jetbrains/icons/trash";
 import AddIcon from "@jetbrains/icons/add";
 import ChevronDownIcon from "@jetbrains/icons/chevron-down";
 import ChevronUpIcon from "@jetbrains/icons/chevron-up";
+import WarningIcon from "@jetbrains/icons/warning-empty";
 import Text from "@jetbrains/ring-ui-built/components/text/text";
 import Panel from "@jetbrains/ring-ui-built/components/panel/panel";
 import { Grid, Row, Col } from "@jetbrains/ring-ui-built/components/grid/grid";
@@ -18,6 +19,7 @@ import CollapseContent from "@jetbrains/ring-ui-built/components/collapse/collap
 import langMarkdown from "highlight.js/lib/languages/markdown.js";
 import { replaceText } from "../../replace-text";
 import type { Replacements, Replacement } from "../../replace-text";
+import Icon from "@jetbrains/ring-ui-built/components/icon/icon.js";
 
 highlight.registerLanguage("markdown", langMarkdown);
 
@@ -39,6 +41,8 @@ const AppComponent: React.FunctionComponent = () => {
   const [replacements, setReplacements] = useState<Replacements>([]);
   const [testTextInput, setTestTextInput] = useState<string>("");
   const [testTextOutput, setTestTextOutput] = useState<string>("");
+  const [showRecursiveReplacementWarning, setRecursiveReplacementWarning] =
+    useState<boolean>(false);
 
   useEffect(() => {
     host
@@ -128,7 +132,11 @@ const AppComponent: React.FunctionComponent = () => {
   const testReplacements = useCallback(
     (inputText: string) => {
       const outputText = replaceText(inputText, replacements, false);
+      const outputText2 = replaceText(outputText, replacements, false);
       setTestTextOutput(outputText);
+
+      const noChangeIfAppliedTwice = outputText === outputText2;
+      setRecursiveReplacementWarning(!noChangeIfAppliedTwice);
     },
     [replacements]
   );
@@ -249,6 +257,15 @@ const AppComponent: React.FunctionComponent = () => {
           >
             Test replacements
           </Button>
+          {showRecursiveReplacementWarning && (
+            <div>
+              <Icon glyph={WarningIcon} />
+              <Text size={Text.Size.M}>
+                Warning! Applying the replacements multiple times produces different results. This
+                may lead to unexpected behavior.
+              </Text>
+            </div>
+          )}
           {testTextOutput && <Code language="markdown" code={testTextOutput} />}
         </div>
       </div>
