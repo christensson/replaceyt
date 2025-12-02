@@ -21,8 +21,12 @@
   "modules": {
     "workflows": [
       {
-        "name": "Replace Text Workflow",
-        "script": "replace-text-wf.js"
+        "name": "Replace Text in Ticket",
+        "script": "replace-text-issue-wf.js"
+      },
+      {
+        "name": "Replace Text in Article",
+        "script": "replace-text-article-wf.js"
       }
     ]
   }

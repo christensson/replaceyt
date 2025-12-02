@@ -2,9 +2,9 @@
 
 ![replaceyt icon](./public/replaceyt-icon.svg)
 
-YouTrack app to automatically replace text in ticket description on ticket save events. Replacements
-supports simple text substitution as well as pattern based using standard javascript regular
-expressions. Capture groups are supported in the replacement as well.
+YouTrack app to automatically replace text in ticket or article descriptions automatically on save.
+Replacements supports simple text substitution as well as pattern-based using standard javascript
+regular expressions. Capture groups are supported in the replacement as well.
 
 Some supported use-cases:
 
@@ -67,4 +67,4 @@ Note that changes to any replacements need to be saved using the *Save* button.
 
 The configuration page has an input test text to the right of the replacements. Use this to input
 some test text. When the *Test replacements* button is pressed, then the replacements are tested on
-that text in order to test how they work without updating any tickets.
+that text in order to test how they work without updating any tickets or articles.
