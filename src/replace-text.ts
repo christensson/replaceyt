@@ -7,6 +7,8 @@ export type Replacement = {
   ignoreLinks: boolean;
   ignoreInlineCode: boolean;
   enabled: boolean;
+  enabledForArticles: boolean;
+  enabledForIssues: boolean;
 };
 
 export type Replacements = Replacement[];
@@ -162,7 +164,8 @@ const applyReplacementWithProtection = (
 export const replaceText = (
   text: string,
   replacements: Replacements,
-  enabledOnly: boolean
+  enabledOnly: boolean,
+  kind: "article" | "issue" | "any"
 ): string => {
   if (!text) return text;
 
@@ -173,6 +176,15 @@ export const replaceText = (
     if (enabledOnly && !item.enabled) {
       continue;
     }
+
+    if (kind === "article" && !item.enabledForArticles) {
+      continue;
+    }
+
+    if (kind === "issue" && !item.enabledForIssues) {
+      continue;
+    }
+
     // Find protected ranges for this replacement
     const protectedRanges = findProtectedRanges(
       outputText,
@@ -186,4 +198,20 @@ export const replaceText = (
   }
 
   return outputText;
+};
+
+export const replaceIssueText = (
+  text: string,
+  replacements: Replacements,
+  enabledOnly: boolean
+): string => {
+  return replaceText(text, replacements, enabledOnly, "issue");
+};
+
+export const replaceArticleText = (
+  text: string,
+  replacements: Replacements,
+  enabledOnly: boolean
+): string => {
+  return replaceText(text, replacements, enabledOnly, "article");
 };

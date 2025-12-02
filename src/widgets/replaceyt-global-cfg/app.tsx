@@ -7,6 +7,7 @@ import ChevronDownIcon from "@jetbrains/icons/chevron-down";
 import ChevronUpIcon from "@jetbrains/icons/chevron-up";
 import WarningIcon from "@jetbrains/icons/warning-empty";
 import Text from "@jetbrains/ring-ui-built/components/text/text";
+import Toggle from "@jetbrains/ring-ui-built/components/toggle/toggle";
 import Panel from "@jetbrains/ring-ui-built/components/panel/panel";
 import { Grid, Row, Col } from "@jetbrains/ring-ui-built/components/grid/grid";
 import Code from "@jetbrains/ring-ui-built/components/code/code";
@@ -31,7 +32,9 @@ const defaultReplacement: Replacement = {
   ignoreCodeBlocks: true,
   ignoreLinks: true,
   ignoreInlineCode: false,
-  enabled: true,
+  enabled: false,
+  enabledForArticles: true,
+  enabledForIssues: true,
 };
 
 // Register widget in YouTrack. To learn more, see https://www.jetbrains.com/help/youtrack/devportal-apps/apps-host-api.html
@@ -115,6 +118,14 @@ const AppComponent: React.FunctionComponent = () => {
     updateReplacementField(index, "enabled", value);
   }, []);
 
+  const handleEnabledForArticlesChange = useCallback((index: number, value: boolean) => {
+    updateReplacementField(index, "enabledForArticles", value);
+  }, []);
+
+  const handleEnabledForIssuesChange = useCallback((index: number, value: boolean) => {
+    updateReplacementField(index, "enabledForIssues", value);
+  }, []);
+
   const handleAddRow = useCallback(() => {
     setReplacements((prev) => [
       ...prev,
@@ -131,8 +142,8 @@ const AppComponent: React.FunctionComponent = () => {
 
   const testReplacements = useCallback(
     (inputText: string) => {
-      const outputText = replaceText(inputText, replacements, false);
-      const outputText2 = replaceText(outputText, replacements, false);
+      const outputText = replaceText(inputText, replacements, false, "any");
+      const outputText2 = replaceText(outputText, replacements, false, "any");
       setTestTextOutput(outputText);
 
       const noChangeIfAppliedTwice = outputText === outputText2;
@@ -177,6 +188,15 @@ const AppComponent: React.FunctionComponent = () => {
                       item.patternIsRegex ? "Capture groups are available using $1, $2, etc." : null
                     }
                   />
+                  <div className="config-input">
+                    <Toggle
+                      checked={item.enabled}
+                      onChange={(e) => handleEnabledChange(index, e.target.checked)}
+                      help="Activates the replacement for ticket and/or article on save events."
+                    >
+                      Activated
+                    </Toggle>
+                  </div>
                   <Collapse>
                     <CollapseControl>
                       {(collapsed: boolean) => (
@@ -188,10 +208,18 @@ const AppComponent: React.FunctionComponent = () => {
                     <CollapseContent>
                       <div className="config-input">
                         <Checkbox
-                          label="Enabled"
-                          checked={item.enabled}
-                          onChange={(e) => handleEnabledChange(index, e.target.checked)}
-                          help="Enabling the replacement activates replacement at issue updates."
+                          label="Use for Tickets"
+                          checked={item.enabledForIssues}
+                          onChange={(e) => handleEnabledForIssuesChange(index, e.target.checked)}
+                          help="Use replacement for Tickets."
+                        />
+                      </div>
+                      <div className="config-input">
+                        <Checkbox
+                          label="Use for Articles"
+                          checked={item.enabledForArticles}
+                          onChange={(e) => handleEnabledForArticlesChange(index, e.target.checked)}
+                          help="Use replacement for Knowledge Base Articles."
                         />
                       </div>
                       <div className="config-input">
