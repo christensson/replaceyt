@@ -11,6 +11,8 @@ Some supported use-cases:
 - Replace some abbreviation is replaced with it's full form.
 - Make links of commonly used IDs if links URLs are structured and includes ID.
 
+![Honored YouTrack App Creator Badge](https://api.accredible.com/v1/frontend/credential_website_embed_image/badge/168044274)
+
 ## Roadmap
 
 - Project level replacement configuration.
