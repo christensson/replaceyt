@@ -1,5 +1,6 @@
 {
   "name": "replaceyt",
+  "version": "0.1.0",
   "title": "Text Replacer",
   "description": "Replace text in youtrack tickets and articles.",
   "$schema": "https://json.schemastore.org/youtrack-app.json",
