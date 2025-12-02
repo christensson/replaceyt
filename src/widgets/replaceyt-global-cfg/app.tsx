@@ -26,6 +26,7 @@ highlight.registerLanguage("markdown", langMarkdown);
 
 const defaultReplacement: Replacement = {
   id: "",
+  name: "",
   pattern: "",
   replacement: "",
   patternIsRegex: false,
@@ -56,7 +57,8 @@ const AppComponent: React.FunctionComponent = () => {
         // eslint-disable-next-line no-console
         console.log("Got replacements:", replacements);
         if (replacements != null && Array.isArray(replacements)) {
-          for (const item of replacements) {
+          for (let i = 0; i < replacements.length; i++) {
+            const item = replacements[i];
             for (const [key, value] of Object.entries(defaultReplacement)) {
               if (item.hasOwnProperty(key) === false) {
                 // @ts-ignore
@@ -65,6 +67,9 @@ const AppComponent: React.FunctionComponent = () => {
             }
             if (item.id == null || item.id === "") {
               item.id = crypto.randomUUID();
+            }
+            if (item.name == null || item.name === "") {
+              item.name = `Replacement ${i + 1}`;
             }
           }
           setReplacements(replacements);
@@ -89,6 +94,10 @@ const AppComponent: React.FunctionComponent = () => {
       return updated;
     });
   };
+
+  const handleNameChange = useCallback((index: number, value: string) => {
+    updateReplacementField(index, "name", value);
+  }, []);
 
   const handlePatternChange = useCallback((index: number, value: string) => {
     updateReplacementField(index, "pattern", value);
@@ -132,6 +141,7 @@ const AppComponent: React.FunctionComponent = () => {
       {
         ...defaultReplacement,
         id: crypto.randomUUID(),
+        name: `Replacement ${prev.length + 1}`,
       },
     ]);
   }, []);
@@ -160,6 +170,12 @@ const AppComponent: React.FunctionComponent = () => {
             {replacements.map((item, index) => (
               <Row key={index} className="data-row">
                 <Col xs={11}>
+                  <Input
+                    label="Name"
+                    value={item.name}
+                    onChange={(e) => handleNameChange(index, e.target.value)}
+                    size={Size.L}
+                  />
                   <div className="config-pattern-regex-group">
                     <Input
                       label={`${item.patternIsRegex ? "Regex" : "String"} to search and replace`}

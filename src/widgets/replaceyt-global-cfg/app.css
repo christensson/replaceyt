@@ -38,6 +38,7 @@
 .config-pattern-regex-group {
   display: flex;
   align-items: end;
+  padding-top: var(--ring-unit);
   gap: calc(var(--ring-unit) / 2);
 }
 

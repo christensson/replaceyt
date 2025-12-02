@@ -1,5 +1,6 @@
 export type Replacement = {
   id: string;
+  name: string;
   pattern: string;
   replacement: string;
   patternIsRegex: boolean;
