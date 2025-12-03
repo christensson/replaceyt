@@ -20,6 +20,20 @@
   flex-direction: column;
   align-items: flex-start;
   gap: var(--ring-unit);
+  margin-left: auto;
+  padding-left: calc(var(--ring-unit));
+  border-left: 1px solid var(--ring-line-color);
+}
+
+.warning-color {
+  color: var(--ring-warning-color);
+}
+
+.config-recursive-replacement-warning {
+  display: flex;
+  align-items: baseline;
+  gap: calc(var(--ring-unit) / 2);
+  max-width: 350px;
 }
 
 .data-row {

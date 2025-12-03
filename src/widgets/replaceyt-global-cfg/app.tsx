@@ -302,8 +302,8 @@ const AppComponent: React.FunctionComponent = () => {
             Test replacements
           </Button>
           {showRecursiveReplacementWarning && (
-            <div>
-              <Icon glyph={WarningIcon} />
+            <div className="config-recursive-replacement-warning">
+              <Icon glyph={WarningIcon} className="warning-color" />
               <Text size={Text.Size.M}>
                 Warning! Applying the replacements multiple times produces different results. This
                 may lead to unexpected behavior.
