@@ -1,13 +1,15 @@
 {
+  "$schema": "https://json.schemastore.org/youtrack-app.json",
   "name": "replaceyt",
-  "version": "0.1.0",
   "title": "Text Replacer",
   "description": "Replace text in youtrack tickets and articles.",
-  "$schema": "https://json.schemastore.org/youtrack-app.json",
+  "version": "0.1.0",
+  "changeNotes": "Initial release",
   "vendor": {
     "name": "Marcus Christensson",
     "url": "https://github.com/christensson/replaceyt"
   },
+  "minYouTrackVersion": "2024.3.0",
   "icon": "replaceyt-icon.svg",
   "widgets": [
     {
