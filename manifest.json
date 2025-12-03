@@ -2,7 +2,7 @@
   "$schema": "https://json.schemastore.org/youtrack-app.json",
   "name": "replaceyt",
   "title": "Text Replacer",
-  "description": "Replace text in youtrack tickets and articles.",
+  "description": "Replace text in youtrack tickets and articles. Useful for autolinking external resources or inserting templated content from placeholders.",
   "version": "0.1.0",
   "changeNotes": "Initial release",
   "vendor": {
