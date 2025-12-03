@@ -178,10 +178,10 @@ const AppComponent: React.FunctionComponent = () => {
                   />
                   <div className="config-pattern-regex-group">
                     <Input
-                      label={`${item.patternIsRegex ? "Regex" : "String"} to search and replace`}
+                      label={`${item.patternIsRegex ? "Regex" : "String"} to find`}
                       value={item.pattern}
                       onChange={(e) => handlePatternChange(index, e.target.value)}
-                      placeholder="Enter pattern"
+                      placeholder={item.patternIsRegex ? "Enter regex pattern" : "Enter string"}
                       size={Size.L}
                     />
                     <Button
@@ -194,7 +194,7 @@ const AppComponent: React.FunctionComponent = () => {
                     </Button>
                   </div>
                   <Input
-                    label="Replacement"
+                    label="Replace with"
                     value={item.replacement}
                     onChange={(e) => handleReplacementChange(index, e.target.value)}
                     size={Size.L}
