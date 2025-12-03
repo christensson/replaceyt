@@ -8,8 +8,11 @@ regular expressions. Capture groups are supported in the replacement as well.
 
 Some supported use-cases:
 
-- Replace some abbreviation is replaced with it's full form.
-- Make links of commonly used IDs if links URLs are structured and includes ID.
+- Make links of entities referenced by a structured ID if available using a URL containing ID.
+- Insert templated content instead of a placeholder word.
+- Replace some abbreviation with it's full form.
+
+See [example replacements](#example-replacements) section below for more inspiration.
 
 ![Honored YouTrack App Creator Badge](https://api.accredible.com/v1/frontend/credential_website_embed_image/badge/168044274)
 
@@ -73,6 +76,37 @@ To create a new replacement click *Add replacement* in the end of the replacemen
 replacement, click the small trash icon in the top right of each replacement.
 
 Note that changes to any replacements need to be saved using the *Save* button.
+
+#### Example replacements
+
+*Use case:* Replace github style issues of format `Username/Repository#ID` with link to it on
+github.com.
+
+* Regex: `((\w+/\w+)#(\d+))`
+* Replace with: `[$1](https://github.com/$2/issues/$3)`
+
+*Use case:* My tickets references external requirements having a structured ID of format
+`REQ-<number>`, and these can be found using an URL containing that ID.
+
+* Regex: `(REQ-(\d+))`
+* Replace with: `[$1](https://myrequirements.company.com/requirement/$1)`
+
+*Use case:* My tickets references an external document by a short abbreviation known by everyone
+working with the tickets. I want to replace that with a link to the real document.
+
+* String: `DEV-WOW-DOC`
+* Replace with: `[DEV-WOW-DOC](https://mydocs.company.com/url/to/doc)`
+
+*Use case:* I have a "definition of done" list that I want to include in some tickets.
+
+* String: `DOD-LIST`
+* Replace with:
+  ```
+  The following needs to be done before completion:
+  - [ ] Write design documentation.
+  - [ ] Implement code.
+  - [ ] Implement unit-tests for code.
+  ```
 
 #### Test replacements before deployment
 
