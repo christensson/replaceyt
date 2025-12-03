@@ -210,7 +210,7 @@ const AppComponent: React.FunctionComponent = () => {
                       onChange={(e) => handleEnabledChange(index, e.target.checked)}
                       help="Activates the replacement for ticket and/or article on save events."
                     >
-                      Activated
+                      Active
                     </Toggle>
                   </div>
                   <Collapse>
