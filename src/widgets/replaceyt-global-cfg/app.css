@@ -13,6 +13,38 @@
 
 .config-replacements-panel {
   display: flex;
+  flex-direction: column;
+  gap: calc(var(--ring-unit) * 2);
+}
+
+.config-replacement-input-panel {
+  display: flex;
+  flex-direction: row;
+  gap: calc(var(--ring-unit) * 1.5);
+  max-width: 600px;
+  border-bottom: 1px solid var(--ring-line-color);
+  padding-bottom: calc(var(--ring-unit) * 1.5);
+}
+.config-replacement-add-panel {
+  display: flex;
+  flex-direction: row;
+  gap: calc(var(--ring-unit) * 1.5);
+  max-width: 600px;
+  padding-bottom: calc(var(--ring-unit) * 1.5);
+}
+
+.config-replacement-input {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--ring-unit) / 2);
+  align-items: flex-start;
+}
+
+.config-replacement-input-controls {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--ring-unit) / 2);
+  margin-left: auto;
 }
 
 .config-test-panel {
