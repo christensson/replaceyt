@@ -42,31 +42,16 @@ const findProtectedRanges = (
   }
 
   if (ignoreLinks) {
-    // Find all markdown links [text](url) - we want to protect the text and url parts
-    const linkRegex = /\[([^\]]+)\]\(([^\)]+)\)/g;
+    // Find all markdown links [text](url) and plaintext http(s):// URLs
+    const linkRegex = /(\[[^\]]+\]\([^\)]+\)|https?:\/\/\S+)/g;
     let match;
     while ((match = linkRegex.exec(text)) !== null) {
-      const linkText = match[1];
-      const linkUrl = match[2];
       const linkStart = match.index;
-
-      // Protect [text] part: from '[' to ']'
-      const textStart = linkStart + 1; // after '['
-      const textEnd = textStart + linkText.length;
+      const linkEnd = linkStart + match[0].length;
 
       ranges.push({
-        start: textStart,
-        end: textEnd,
-        type: "link",
-      });
-
-      // Protect (url) part: from '(' to ')'
-      const urlStart = textEnd + 2; // after ']('
-      const urlEnd = urlStart + linkUrl.length;
-
-      ranges.push({
-        start: urlStart,
-        end: urlEnd,
+        start: linkStart,
+        end: linkEnd,
         type: "link",
       });
     }
