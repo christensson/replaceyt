@@ -3,8 +3,8 @@
   "name": "replaceyt",
   "title": "Text Replacer",
   "description": "Replace text in youtrack tickets and articles. Useful for autolinking external resources or inserting templated content from placeholders.",
-  "version": "0.1.0",
-  "changeNotes": "Initial release",
+  "version": "0.2.0",
+  "changeNotes": "Version 0.2.0:<br/>-Add per-project replacements.<br/>-Ignore links now also ignores non-markdown formatted http URLs.",
   "vendor": {
     "name": "Marcus Christensson",
     "url": "https://github.com/christensson/replaceyt"
