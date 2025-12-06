@@ -5,16 +5,7 @@ exports.httpHandler = {
       path: 'globalConfig',
       handle: function handle(ctx) {
         const props = ctx.globalStorage.extensionProperties;
-        if (props.replacements == null) {
-          props.replacements = JSON.stringify([]);
-        }
-        if (props.testInput == null) {
-          props.testInput = "";
-        }
-        let replacements = JSON.parse(props.replacements);
-        if (replacements == null) {
-          replacements = [];
-        }
+        const replacements = JSON.parse(props.replacements) || [];
         const testInput = props.testInput || "";
         ctx.response.json({ replacements: replacements, testInput: testInput });
       }
