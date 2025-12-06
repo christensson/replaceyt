@@ -16,10 +16,6 @@ See [example replacements](#example-replacements) section below for more inspira
 
 ![Honored YouTrack App Creator Badge](https://api.accredible.com/v1/frontend/credential_website_embed_image/badge/168044274)
 
-## Roadmap
-
-- Project level replacement configuration.
-
 ## Installation and Setup
 
 ### Local install
@@ -37,15 +33,20 @@ npm run upload -- --host <YOUTRACK_URL> --token <YOUTRACK_TOKEN>
 
 ### Configuration
 
-App is configurable globally under *Administration* -> *Integrations* -> *Text Replacer Config*
-where text replacements for tickets and/or articles are configured.
+Text replacements for tickets and/or articles can be configured both globally and per project
+enabled in.
 
-The activated replacements are applied for all projects where the app and its bundled workflows are
-active. If text replacements are not wanted for a specific project, simply don't activate the app in
-that project.
+- The global configuration is
+available under *Administration* -> *Integrations* -> *Text Replacer Config*.
+- The per-project configuration is available under *Projects* -> *xxx* ->
+  *Project Settings: Text Replacer Config*.
 
-The global configuration supports configuring multiple replacements, each having the following
-properties:
+The global activated replacements are applied for all projects where the app and its bundled workflows are
+active. The active replacements configured per project are only applied for that project. If text
+replacements are not wanted for a specific project, simply don't activate the app in that project.
+
+The global and per-project configuration supports configuring multiple replacements, each having the
+following properties:
 
 - **Name** the name of the replacement.
   
