@@ -28,7 +28,10 @@ const AppComponent: React.FunctionComponent = () => {
 
   useEffect(() => {
     host
-      .fetchApp<{ replacements: Replacements; testInput: string }>("backend/globalConfig", {})
+      .fetchApp<{ replacements: Replacements; testInput: string }>(
+        "global-backend/globalConfig",
+        {}
+      )
       .then((result) => {
         const replacements = result.replacements;
         const testInput = result.testInput;
@@ -58,7 +61,7 @@ const AppComponent: React.FunctionComponent = () => {
 
   const storeReplacements = async (replacements: Replacements) => {
     console.log("Storing replacements:", replacements);
-    const res = await host.fetchApp("backend/globalConfig", {
+    const res = await host.fetchApp("global-backend/globalConfig", {
       method: "POST",
       body: { replacements: replacements, testInput: testTextInput },
     });
