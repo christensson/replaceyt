@@ -6,12 +6,15 @@ exports.httpHandler = {
       path: 'projectConfig',
       handle: function handle(ctx) {
         const props = ctx.project.extensionProperties;
-        let replacements = JSON.parse(props.replacements);
-        if (replacements == null) {
-          replacements = [];
-        }
+        const globalProps = ctx.globalStorage.extensionProperties;
+        const replacements = JSON.parse(props.replacements) || [];
+        const globalReplacements = JSON.parse(globalProps.replacements) || [];
         const testInput = props.testInput || "";
-        ctx.response.json({ replacements: replacements, testInput: testInput });
+        ctx.response.json({
+          replacements: replacements,
+          globalReplacements: globalReplacements,
+          testInput: testInput
+        });
       }
     },
     {
