@@ -10,18 +10,17 @@ import CollapseControl from "@jetbrains/ring-ui-built/components/collapse/collap
 import Input, { Size } from "@jetbrains/ring-ui-built/components/input/input";
 import Toggle from "@jetbrains/ring-ui-built/components/toggle/toggle";
 import React, { useCallback } from "react";
-import type { Replacement, Replacements } from "../replace-text";
+import type { Replacements } from "../replace-text";
+import { initializeReplacement } from "../widgets/global/replacement";
 
 interface ReplacementsInputProps {
   replacements: Replacements;
   setReplacements: React.Dispatch<React.SetStateAction<Replacements>>;
-  defaultReplacement: Replacement;
 }
 
 const ReplacementsInput: React.FunctionComponent<ReplacementsInputProps> = ({
   replacements,
   setReplacements,
-  defaultReplacement,
 }) => {
   const updateReplacementField = (index: number, key: string, value: any) => {
     setReplacements((prev) => {
@@ -78,11 +77,7 @@ const ReplacementsInput: React.FunctionComponent<ReplacementsInputProps> = ({
   const handleAddRow = useCallback(() => {
     setReplacements((prev) => [
       ...prev,
-      {
-        ...defaultReplacement,
-        id: crypto.randomUUID(),
-        name: `Replacement ${prev.length + 1}`,
-      },
+      initializeReplacement({}, `Replacement ${prev.length + 1}`),
     ]);
   }, []);
 
