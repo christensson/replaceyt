@@ -67,8 +67,8 @@ Advanced settings:
 - **Ignore code blocks**: If markdown code blocks should be ignored for the replacements, i.e. that
   no content within markdown code blocks should be replaced.
 
-- **Ignore links**: If content within markdown links should be ignored, i.e. that no content within
-  markdown links should be replaced.
+- **Ignore links**: If content within links should be ignored, i.e. that no content within markdown
+  links and http URLs should be replaced.
 
 - **Ignore inline code**: If inline code should be ignored by the replacement, i.e. that no content
   within markdown inline code should be replaced.
