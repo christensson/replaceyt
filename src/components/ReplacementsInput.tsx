@@ -16,11 +16,15 @@ import { initializeReplacement } from "../widgets/global/replacement";
 interface ReplacementsInputProps {
   replacements: Replacements;
   setReplacements: React.Dispatch<React.SetStateAction<Replacements>>;
+  readonly?: boolean;
+  hideInactive?: boolean;
 }
 
 const ReplacementsInput: React.FunctionComponent<ReplacementsInputProps> = ({
   replacements,
   setReplacements,
+  readonly = false,
+  hideInactive = false,
 }) => {
   const updateReplacementField = (index: number, key: string, value: any) => {
     setReplacements((prev) => {
@@ -83,113 +87,133 @@ const ReplacementsInput: React.FunctionComponent<ReplacementsInputProps> = ({
 
   return (
     <div className="config-replacements-panel">
-      {replacements.map((item, index) => (
-        <div className="config-replacement-input-panel">
-          <div className="config-replacement-input">
-            <Input
-              label="Name"
-              value={item.name}
-              onChange={(e) => handleNameChange(index, e.target.value)}
-              size={Size.L}
-            />
-            <div className="config-pattern-regex-group">
+      {replacements
+        .filter((item) => !hideInactive || item.enabled)
+        .map((item, index) => (
+          <div className="config-replacement-input-panel">
+            <div className="config-replacement-input">
               <Input
-                label={`${item.patternIsRegex ? "Regex" : "String"} to find`}
-                value={item.pattern}
-                onChange={(e) => handlePatternChange(index, e.target.value)}
-                placeholder={item.patternIsRegex ? "Enter regex pattern" : "Enter string"}
+                label="Name"
+                value={item.name}
+                onChange={(e) => handleNameChange(index, e.target.value)}
                 size={Size.L}
+                disabled={readonly}
               />
-              <Button
-                title="Interpret pattern as a regular expression"
-                onClick={() => handlePatternIsRegexChange(index, !item.patternIsRegex)}
-                active={item.patternIsRegex}
-                className="config-regex-toggle"
-              >
-                {".*"}
-              </Button>
+              <div className="config-pattern-regex-group">
+                <Input
+                  label={`${item.patternIsRegex ? "Regex" : "String"} to find`}
+                  value={item.pattern}
+                  onChange={(e) => handlePatternChange(index, e.target.value)}
+                  placeholder={item.patternIsRegex ? "Enter regex pattern" : "Enter string"}
+                  size={Size.L}
+                  disabled={readonly}
+                />
+                <Button
+                  title="Interpret pattern as a regular expression"
+                  onClick={() => handlePatternIsRegexChange(index, !item.patternIsRegex)}
+                  active={item.patternIsRegex}
+                  className="config-regex-toggle"
+                  disabled={readonly}
+                >
+                  {".*"}
+                </Button>
+              </div>
+              <Input
+                label="Replace with"
+                value={item.replacement}
+                onChange={(e) => handleReplacementChange(index, e.target.value)}
+                size={Size.L}
+                multiline
+                className="config-input"
+                help={
+                  item.patternIsRegex ? "Capture groups are available using $1, $2, etc." : null
+                }
+                disabled={readonly}
+              />
+              {!hideInactive && (
+                <div className="config-input">
+                  <Toggle
+                    checked={item.enabled}
+                    onChange={(e) => handleEnabledChange(index, e.target.checked)}
+                    help="Activates the replacement for ticket and/or article on save events."
+                    disabled={readonly}
+                  >
+                    Active
+                  </Toggle>
+                </div>
+              )}
+              <Collapse>
+                <CollapseControl>
+                  {(collapsed: boolean) => (
+                    <Button icon={collapsed ? ChevronDownIcon : ChevronUpIcon}>
+                      {collapsed ? "Show advanced settings" : "Hide advanced settings"}
+                    </Button>
+                  )}
+                </CollapseControl>
+                <CollapseContent>
+                  <div className="config-input">
+                    <Checkbox
+                      label="Use for Tickets"
+                      checked={item.enabledForIssues}
+                      onChange={(e) => handleEnabledForIssuesChange(index, e.target.checked)}
+                      help="Use replacement for Tickets."
+                      disabled={readonly}
+                    />
+                  </div>
+                  <div className="config-input">
+                    <Checkbox
+                      label="Use for Articles"
+                      checked={item.enabledForArticles}
+                      onChange={(e) => handleEnabledForArticlesChange(index, e.target.checked)}
+                      help="Use replacement for Knowledge Base Articles."
+                      disabled={readonly}
+                    />
+                  </div>
+                  <div className="config-input">
+                    <Checkbox
+                      label="Ignore code blocks"
+                      checked={item.ignoreCodeBlocks}
+                      onChange={(e) => handleIgnoreCodeBlocksChange(index, e.target.checked)}
+                      disabled={readonly}
+                    />
+                  </div>
+                  <div className="config-input">
+                    <Checkbox
+                      label="Ignore links"
+                      checked={item.ignoreLinks}
+                      onChange={(e) => handleIgnoreLinksChange(index, e.target.checked)}
+                      disabled={readonly}
+                    />
+                  </div>
+                  <div className="config-input">
+                    <Checkbox
+                      label="Ignore inline code"
+                      checked={item.ignoreInlineCode}
+                      onChange={(e) => handleIgnoreInlineCodeChange(index, e.target.checked)}
+                      disabled={readonly}
+                    />
+                  </div>
+                </CollapseContent>
+              </Collapse>
             </div>
-            <Input
-              label="Replace with"
-              value={item.replacement}
-              onChange={(e) => handleReplacementChange(index, e.target.value)}
-              size={Size.L}
-              multiline
-              className="config-input"
-              help={item.patternIsRegex ? "Capture groups are available using $1, $2, etc." : null}
-            />
-            <div className="config-input">
-              <Toggle
-                checked={item.enabled}
-                onChange={(e) => handleEnabledChange(index, e.target.checked)}
-                help="Activates the replacement for ticket and/or article on save events."
-              >
-                Active
-              </Toggle>
-            </div>
-            <Collapse>
-              <CollapseControl>
-                {(collapsed: boolean) => (
-                  <Button icon={collapsed ? ChevronDownIcon : ChevronUpIcon}>
-                    {collapsed ? "Show advanced settings" : "Hide advanced settings"}
-                  </Button>
-                )}
-              </CollapseControl>
-              <CollapseContent>
-                <div className="config-input">
-                  <Checkbox
-                    label="Use for Tickets"
-                    checked={item.enabledForIssues}
-                    onChange={(e) => handleEnabledForIssuesChange(index, e.target.checked)}
-                    help="Use replacement for Tickets."
-                  />
-                </div>
-                <div className="config-input">
-                  <Checkbox
-                    label="Use for Articles"
-                    checked={item.enabledForArticles}
-                    onChange={(e) => handleEnabledForArticlesChange(index, e.target.checked)}
-                    help="Use replacement for Knowledge Base Articles."
-                  />
-                </div>
-                <div className="config-input">
-                  <Checkbox
-                    label="Ignore code blocks"
-                    checked={item.ignoreCodeBlocks}
-                    onChange={(e) => handleIgnoreCodeBlocksChange(index, e.target.checked)}
-                  />
-                </div>
-                <div className="config-input">
-                  <Checkbox
-                    label="Ignore links"
-                    checked={item.ignoreLinks}
-                    onChange={(e) => handleIgnoreLinksChange(index, e.target.checked)}
-                  />
-                </div>
-                <div className="config-input">
-                  <Checkbox
-                    label="Ignore inline code"
-                    checked={item.ignoreInlineCode}
-                    onChange={(e) => handleIgnoreInlineCodeChange(index, e.target.checked)}
-                  />
-                </div>
-              </CollapseContent>
-            </Collapse>
+            {!readonly && (
+              <div className="config-replacement-input-controls">
+                <Button
+                  onClick={() => handleDelete(index)}
+                  title="Delete replacement"
+                  icon={TrashIcon}
+                />
+              </div>
+            )}
           </div>
-          <div className="config-replacement-input-controls">
-            <Button
-              onClick={() => handleDelete(index)}
-              title="Delete replacement"
-              icon={TrashIcon}
-            />
-          </div>
+        ))}
+      {!readonly && (
+        <div className="config-replacement-add-panel">
+          <Button onClick={handleAddRow} icon={AddIcon}>
+            Add replacement
+          </Button>
         </div>
-      ))}
-      <div className="config-replacement-add-panel">
-        <Button onClick={handleAddRow} icon={AddIcon}>
-          Add replacement
-        </Button>
-      </div>
+      )}
     </div>
   );
 };
