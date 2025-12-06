@@ -1,22 +1,29 @@
 exports.httpHandler = {
   endpoints: [
     {
+      scope: "project",
       method: 'GET',
-      path: 'globalConfig',
+      path: 'projectConfig',
       handle: function handle(ctx) {
-        const replacements = JSON.parse(ctx.globalStorage.extensionProperties.replacements);
-        const testInput = ctx.globalStorage.extensionProperties.testInput || "";
+        const props = ctx.project.extensionProperties;
+        let replacements = JSON.parse(props.replacements);
+        if (replacements == null) {
+          replacements = [];
+        }
+        const testInput = props.testInput || "";
         ctx.response.json({ replacements: replacements, testInput: testInput });
       }
     },
     {
+      scope: "project",
       method: 'POST',
-      path: 'globalConfig',
+      path: 'projectConfig',
       handle: function handle(ctx) {
+        let props = ctx.project.extensionProperties;
         const body = JSON.parse(ctx.request.body);
-        ctx.globalStorage.extensionProperties.replacements = JSON.stringify(body.replacements);
+        props.replacements = JSON.stringify(body.replacements);
         if (body.hasOwnProperty('testInput') && body.testInput !== undefined) {
-          ctx.globalStorage.extensionProperties.testInput = body.testInput;
+          props.testInput = body.testInput;
         }
         ctx.response.json({ success: true });
       }

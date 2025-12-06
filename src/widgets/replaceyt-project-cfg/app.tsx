@@ -1,0 +1,94 @@
+import Button from "@jetbrains/ring-ui-built/components/button/button";
+import Panel from "@jetbrains/ring-ui-built/components/panel/panel";
+import React, { memo, useEffect, useState } from "react";
+import ReplacementsInput from "../../components/ReplacementsInput";
+import TestReplacements from "../../components/TestReplacements";
+import type { Replacement, Replacements } from "../../replace-text";
+
+const defaultReplacement: Replacement = {
+  id: "",
+  name: "",
+  pattern: "",
+  replacement: "",
+  patternIsRegex: false,
+  ignoreCodeBlocks: true,
+  ignoreLinks: true,
+  ignoreInlineCode: false,
+  enabled: false,
+  enabledForArticles: true,
+  enabledForIssues: true,
+};
+
+// Register widget in YouTrack. To learn more, see https://www.jetbrains.com/help/youtrack/devportal-apps/apps-host-api.html
+const host = await YTApp.register();
+
+const AppComponent: React.FunctionComponent = () => {
+  const [replacements, setReplacements] = useState<Replacements>([]);
+  const [testTextInput, setTestTextInput] = useState<string>("");
+
+  useEffect(() => {
+    host
+      .fetchApp<{ replacements: Replacements; testInput: string }>("backend/projectConfig", {
+        scope: true,
+      })
+      .then((result) => {
+        const replacements = result.replacements;
+        const testInput = result.testInput;
+        // eslint-disable-next-line no-console
+        console.log("Got replacements:", replacements);
+        if (replacements != null && Array.isArray(replacements)) {
+          for (let i = 0; i < replacements.length; i++) {
+            const item = replacements[i];
+            for (const [key, value] of Object.entries(defaultReplacement)) {
+              if (item.hasOwnProperty(key) === false) {
+                // @ts-ignore
+                item[key] = value;
+              }
+            }
+            if (item.id == null || item.id === "") {
+              item.id = crypto.randomUUID();
+            }
+            if (item.name == null || item.name === "") {
+              item.name = `Replacement ${i + 1}`;
+            }
+          }
+          setReplacements(replacements);
+          setTestTextInput(testInput);
+        }
+      });
+  }, [host]);
+
+  const storeReplacements = async (replacements: Replacements) => {
+    console.log("Storing replacements:", replacements);
+    const res = await host.fetchApp("backend/projectConfig", {
+      scope: true,
+      method: "POST",
+      body: { replacements: replacements, testInput: testTextInput },
+    });
+    console.log("Store response:", res);
+  };
+
+  return (
+    <div className="widget">
+      <div className="config-and-test-panel">
+        <ReplacementsInput
+          replacements={replacements}
+          setReplacements={setReplacements}
+          defaultReplacement={defaultReplacement}
+        />
+        <TestReplacements
+          testTextInput={testTextInput}
+          setTestTextInput={setTestTextInput}
+          replacements={replacements}
+        />
+      </div>
+      <Panel>
+        <Button primary onClick={() => storeReplacements(replacements)}>
+          Save
+        </Button>
+      </Panel>
+    </div>
+  );
+};
+
+export const App = memo(AppComponent);

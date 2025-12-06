@@ -59,6 +59,7 @@ export default defineConfig({
       input: {
         // List every widget entry point here
         replaceytGlobalCfg: resolve(__dirname, 'src/widgets/replaceyt-global-cfg/index.html'),
+        replaceytProjectCfg: resolve(__dirname, 'src/widgets/replaceyt-project-cfg/index.html'),
       }
     }
   }

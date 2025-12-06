@@ -17,7 +17,15 @@
       "name": "Text Replacer Config",
       "indexPath": "replaceyt-global-cfg/index.html",
       "extensionPoint": "ADMINISTRATION_MENU_ITEM",
-      "iconPath": "replaceyt-global-cfg/replaceyt-icon.svg",
+      "iconPath": "global/replaceyt-icon.svg",
+      "description": "Configure text replacements for tickets and articles."
+    },
+    {
+      "key": "replaceyt-project-cfg",
+      "name": "Text Replacer Config",
+      "indexPath": "replaceyt-project-cfg/index.html",
+      "extensionPoint": "PROJECT_SETTINGS",
+      "iconPath": "global/replaceyt-icon.svg",
       "description": "Configure text replacements for tickets and articles."
     }
   ],
