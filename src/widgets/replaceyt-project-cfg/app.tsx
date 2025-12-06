@@ -84,7 +84,7 @@ const AppComponent: React.FunctionComponent = () => {
           <TestReplacements
             testTextInput={testTextInput}
             setTestTextInput={setTestTextInput}
-            replacements={replacements}
+            replacements={[...globalReplacements, ...replacements]}
           />
         </div>
       </div>
