@@ -47,11 +47,13 @@ const AppComponent: React.FunctionComponent = () => {
     <div className="widget">
       <div className="config-and-test-panel">
         <ReplacementsInput replacements={replacements} setReplacements={setReplacements} />
-        <TestReplacements
-          testTextInput={testTextInput}
-          setTestTextInput={setTestTextInput}
-          replacements={replacements}
-        />
+        <div className="config-right-panel">
+          <TestReplacements
+            testTextInput={testTextInput}
+            setTestTextInput={setTestTextInput}
+            replacements={replacements}
+          />
+        </div>
       </div>
       <Panel>
         <Button primary onClick={() => storeReplacements(replacements)}>

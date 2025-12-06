@@ -11,6 +11,12 @@
   gap: calc(var(--ring-unit) * 2);
 }
 
+.config-left-panel {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--ring-unit) * 2);
+}
+
 .config-replacements-panel {
   display: flex;
   flex-direction: column;
@@ -47,7 +53,7 @@
   margin-left: auto;
 }
 
-.config-test-panel {
+.config-right-panel {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -55,6 +61,13 @@
   margin-left: auto;
   padding-left: calc(var(--ring-unit));
   border-left: 1px solid var(--ring-line-color);
+}
+
+.config-test-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--ring-unit);
 }
 
 .warning-color {
