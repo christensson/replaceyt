@@ -18,7 +18,10 @@
       "indexPath": "replaceyt-global-cfg/index.html",
       "extensionPoint": "ADMINISTRATION_MENU_ITEM",
       "iconPath": "global/replaceyt-icon.svg",
-      "description": "Configure text replacements for tickets and articles."
+      "description": "Configure text replacements for tickets and articles.",
+      "permissions": [
+        "ADMIN_UPDATE_APP"
+      ]
     },
     {
       "key": "replaceyt-project-cfg",
@@ -26,7 +29,10 @@
       "indexPath": "replaceyt-project-cfg/index.html",
       "extensionPoint": "PROJECT_SETTINGS",
       "iconPath": "global/replaceyt-icon.svg",
-      "description": "Configure text replacements for tickets and articles."
+      "description": "Configure text replacements for tickets and articles.",
+      "permissions": [
+        "UPDATE_PROJECT"
+      ]
     }
   ],
   "modules": {
