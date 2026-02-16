@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from "uuid";
 import type { Replacement } from "../../replace-text";
 
 export const defaultReplacement: Replacement = {
@@ -17,7 +18,7 @@ export const defaultReplacement: Replacement = {
 export const initializeReplacement = (item: Partial<Replacement>, name: string): Replacement => {
   const newItem: Replacement = { ...defaultReplacement, ...item };
   if (newItem.id == null || newItem.id === "") {
-    newItem.id = crypto.randomUUID();
+    newItem.id = uuidv4();
   }
   if (newItem.name == null || newItem.name === "") {
     newItem.name = name;
