@@ -3,8 +3,8 @@
   "name": "replaceyt",
   "title": "Text Replacer",
   "description": "Replace text in tickets and articles. Useful for autolinking external resources or inserting templated content from placeholders.",
-  "version": "0.2.2",
-  "changeNotes": "Version 0.2.2:<br/>- Fix UUIDv4 ID generation if app used from non-secure HTTP context.",
+  "version": "0.2.3",
+  "changeNotes": "Version 0.2.3:<br/>- Update dependencies.",
   "vendor": {
     "name": "Marcus Christensson",
     "url": "https://github.com/christensson/replaceyt"
