@@ -25,7 +25,7 @@ npm install
 npm run build
 ```
 
-### Upload to specific youtrack instance
+### Upload to specific YouTrack instance
 
 ```
 npm run upload -- --host <YOUTRACK_URL> --token <YOUTRACK_TOKEN>
